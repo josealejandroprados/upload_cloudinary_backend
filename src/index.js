@@ -8,6 +8,7 @@ import cors from 'cors';
 
 // importar routes
 import authRoutes from './static/routes/auth.routes.js';
+import imageRoutes from './static/routes/images.routes.js';
 
 // crear app
 const app = express();
@@ -47,6 +48,7 @@ app.use(morgan('dev'));
 
 // usar routes
 app.use('/', cors(), authRoutes);
+app.use('/', cors(), imageRoutes);
 
 // iniciar servidor
 app.listen(app.get('port'), () => {
