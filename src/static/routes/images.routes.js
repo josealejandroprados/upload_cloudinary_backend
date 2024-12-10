@@ -19,18 +19,18 @@ import {
 
 // importar middleware isAuth
 import { isAuth } from '../middlewares/auth.js';
-import { check } from 'express-validator';
+import { check, body } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-campos.js';
 
 
 router.post(
     '/addimage',
     isAuth,
+    upload.single('imagen'),
     [
         check('nombre','el nombre es obligatorio').notEmpty()
     ],
     validarCampos,
-    upload.single('imagen'),
     addImageController
 );
 
