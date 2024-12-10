@@ -6,6 +6,9 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
+// importar routes
+import authRoutes from './static/routes/auth.routes.js';
+
 // crear app
 const app = express();
 
@@ -42,6 +45,8 @@ app.use(express.urlencoded({extended: false}));
 // usar morgan para ver solicitudes http en consola
 app.use(morgan('dev'));
 
+// usar routes
+app.use('/', cors(), authRoutes);
 
 // iniciar servidor
 app.listen(app.get('port'), () => {
