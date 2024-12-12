@@ -57,7 +57,7 @@ async function addImageController(req,res) {
         console.log('error: ',error);
         res.status(405).json({
             message:'error',
-            error:error
+            error:error.message
         });
     }
     // 
@@ -75,7 +75,7 @@ async function getAllImages(req,res) {
         console.log('error: ',error);
         res.status(401).json({
             message:'error',
-            error:error
+            error:error.message
         });
     }
 }
