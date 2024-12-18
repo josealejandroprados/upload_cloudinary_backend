@@ -6,9 +6,14 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
+import http from 'http';
+import {Server} from "socket.io";
+
 // importar routes
 import authRoutes from './static/routes/auth.routes.js';
 import imageRoutes from './static/routes/images.routes.js';
+
+import sockets from './sockets.js';
 
 // crear app
 const app = express();
@@ -19,7 +24,7 @@ const listDomain = [
 ];
 //opciones de CORS
 const corsOpcions = {
-    origin: function(origin,callback){
+    origin: (origin,callback) => {
         if(listDomain.indexOf(origin) !== -1 || !origin){
             callback(null,true);
         }
@@ -30,6 +35,15 @@ const corsOpcions = {
     optionsSuccessStatus:200,
     credentials:true
 };
+
+// crear servidor
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: corsOpcions
+});
+
+// usar sockets
+sockets(io);
 
 //usar CORS
 app.use(cors(corsOpcions));
@@ -47,10 +61,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(morgan('dev'));
 
 // usar routes
-app.use('/', cors(), authRoutes);
-app.use('/', cors(), imageRoutes);
+app.use('/', authRoutes);
+app.use('/', imageRoutes);
 
 // iniciar servidor
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log(`servidor escuchando en puerto ${app.get('port')}`);
 });
