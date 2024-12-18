@@ -39,7 +39,12 @@ const corsOpcions = {
 // crear servidor
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: corsOpcions
+    cors: {
+        origin: listDomain,
+        optionsSuccessStatus:200,
+        credentials:true,
+        methods: ['GET', 'POST']
+    }
 });
 
 // usar sockets
